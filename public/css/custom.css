@@ -1,0 +1,6 @@
+.d-none{ display:none !important; }
+.alert-danger{color: #a94442; border-color: #ebccd1;}
+.alert-success{color: #3c763d; border-color: #d6e9c6;}
+.border-red{ border-color:#FF0000 !important; }
+.w-180{width: 180px;}
+.f-12{ font-size:12px !important; }
