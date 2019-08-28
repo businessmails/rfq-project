@@ -2,7 +2,7 @@
 @section('content')
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
-    <form class="login-form" action="/signup" method="post">
+    <form class="login-form" action="{{url('/buyer-signup')}}" method="post">
         {{ csrf_field() }}
         <div class="logo" style="margin: 0 auto; padding-bottom: 0;">
             <a href="index.html">
@@ -17,15 +17,15 @@
             <label class="control-label ">Account Type</label>
             <select class="form-control form-control-solid placeholder-no-fix " 
                    autocomplete="off"  name="account_type" > 
-                   <option>Please Select</option>
+                   <option value=''> Please Select</option>
                    @foreach(StaticArray::$account_types as $key => $value)
                    <option value="{{$key}}">{{$value}}</option>
                    @endforeach
 
                    
             </select>
-				   @if ($errors->has('company_name'))
-			<span class="error text-danger">{{ $errors->first('company_name') }}</span>
+				   @if ($errors->has('account_type'))
+			<span class="error text-danger">{{ $errors->first('account_type') }}</span>
 			@endif
         </div>
         <div class="form-group">
@@ -50,6 +50,14 @@
 				   autocomplete="off" placeholder="Email" name="email" /> 
 				   @if ($errors->has('email'))
 			<span class="error text-danger">{{ $errors->first('email') }}</span>
+			@endif
+        </div>
+        <div class="form-group">
+            <label class="control-label ">Contact Name</label>
+            <input class="form-control form-control-solid placeholder-no-fix " type="text" 
+				   autocomplete="off" placeholder="Contact Name" name="name" /> 
+				   @if ($errors->has('name'))
+			<span class="error text-danger">{{ $errors->first('name') }}</span>
 			@endif
         </div>
         <div class="form-group">

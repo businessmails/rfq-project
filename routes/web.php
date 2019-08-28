@@ -16,9 +16,15 @@
 //User Login
 Route::any('/login','UserController@login')->name('login');
 Route::any('/signup','UserController@signUp');
+Route::any('/buyer-signup','UserController@BuyerSignUp');
+Route::any('/seller-signup','UserController@SellerSignUp');
 Route::any('/logout','UserController@logout');
-Route::group([ 'middleware' => ['auth']], function() {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+Route::get('/', function () {
+    return view('welcome');
 });
+
+// Route::group([ 'middleware' => ['auth']], function() {
+//     Route::get('/', function () {
+//         return view('welcome');
+//     });
+// });

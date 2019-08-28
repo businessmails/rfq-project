@@ -21,12 +21,19 @@ class RoleTableSeeder extends Seeder
                 'updated_at' => '2019-07-01 01:35:44',
             ],
             [
-                'name' => 'vendor',
-                'display_name' => 'Vendor',
-                'description' => 'Vendor',
+                'name' => 'seller',
+                'display_name' => 'seller',
+                'description' => 'seller',
                 'created_at' => '2019-07-01 01:35:44',
                 'updated_at' => '2019-07-01 01:35:44',
-            ]
+            ],
+            [
+                'name' => 'buyer',
+                'display_name' => 'buyer',
+                'description' => 'buyer',
+                'created_at' => '2019-07-01 01:35:44',
+                'updated_at' => '2019-07-01 01:35:44',
+            ],
            
         ];
 
