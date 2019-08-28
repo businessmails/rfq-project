@@ -47,7 +47,7 @@ class UserController extends Controller
                 return redirect('/login')->with(['level' => 'danger', 'content' => "Invalid username or password!!"]);
             }
         }
-        return view('User.login')->with(compact('refererUrl'));
+        return view('User.login');
     }
 
     public function SignUp(Request $request)

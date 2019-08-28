@@ -1,7 +1,7 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>WebSiteName</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -16,7 +16,8 @@
     </div>
     <ul class="nav navbar-nav">
       @if(Auth::user())
-      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#" class="text-uppercase">{{Auth::user()->name}} </a></li>
+      <li><a href="{{url('/')}}">Home</a></li>
       <li><a href="{{url('/logout')}}">logout</a></li>
       @else
       <li class="active"><a href="#">Home</a></li>
@@ -30,10 +31,26 @@
     </ul>
   </div>
 </nav>
-  
 <div class="container">
-  <h3>Home Page</h3>
-  <p>Coming Soon.</p>
+  <h2>User Detais</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th> Company Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+        @foreach($records as $key => $record)
+      <tr>
+        <td>{{$record->name}}</td>
+        <td>{{$record->UserDetail->company_name}}</td>
+        <td>{{array_key_exists($record->UserDetail->account_type,StaticArray::$account_types)  ? StaticArray::$account_types[$record->UserDetail->account_type] : 'Seller' }}</td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>
 
 </body>
