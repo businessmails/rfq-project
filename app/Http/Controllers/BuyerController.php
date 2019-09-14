@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use App\UserDetail;
+use App\Rfq;
+use App\RfqDetail;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,8 @@ class BuyerController extends Controller
 
     public function CreateRfq(Request $request)
     {
-        $user_detail = User::with(['UserDetail'])->where('id',Auth::user()->id)->first();
+        $user = User::with(['UserDetail'])->where('id',Auth::user()->id)->first();
+        $user_detail=   UserDetail::where('user_id',Auth::user()->id)->first();
         if($request->method() == 'POST') 
         {
         $validator = Validator::make($request->all(), [
@@ -28,7 +31,6 @@ class BuyerController extends Controller
                     'freight_quote' => 'required',
                     'publish_date' => 'required',
                     'closing_date' => 'required',
-                    'item[]' => 'required',
                     'stock[]' => 'required',
                     'location[]' => 'required',
                     'item_name[]' => 'required',
@@ -46,20 +48,39 @@ class BuyerController extends Controller
         ]);
         if ($validator->passes())
         { 
-            $record = new User();
-            $record->name = $request->name;
-            $record->email = $request->email;
-            $record->password = Hash::make($request->get('password'));
+            $user_detail->phone_number=$request->phone_number;
+            $user_detail->save();
+            $record = new Rfq();
+            $record->rfq_for = $request->rfq_for;
+            $record->state = $request->state;
+            $record->fob_point = $request->fob_point;
+            $record->freight_quote = $request->freight_quote;
+            $record->publish_date = $request->publish_date;
+            $record->closing_date = $request->closing_date;
+            $record->vendor_remarks = $request->vendor_remarks;
+            $record->terms = $request->terms;
+            $record->terms = $request->terms;
+            $record->vendor_email = $request->vendor_email;
+            $record->is_public = $request->is_public;
+            $record->approving_authority = $request->approving_authority;
+            $record->approving_authority = $request->approving_authority;
+            $record->rfq_criteria = $request->rfq_criteria;
+            $record->scoring_mathalogy = $request->scoring_mathalogy;
+            $record->scoring_mathalogy = $request->scoring_mathalogy;
             $record->save();
 
-            $member = Role::where('name', '=', 'seller')->first();
-            $record->attachRole($member);
-            $user_detail = new UserDetail();
-            $user_detail->user_id = $record->id;
-            $user_detail->company_name = $request->company_name;
-            $user_detail->account_type = $request->account_type;
-            $user_detail->registration_number = $request->registration_number;
-            $user_detail->save();
+            foreach($item as $key =>$value){
+                $rfq_detail = new RfqDetail();
+                $rfq_detail->rfq_id = $record->id;
+                $rfq_detail->item_name = $request->item_name[$key];
+                $rfq_detail->location = $request->location[$key];
+                $rfq_detail->item_description = $request->item_description[$key];
+                $rfq_detail->part_no = $request->part_no[$key];
+                $rfq_detail->qty_required	 = $request->qty_required[$key]	;
+                $rfq_detail->unit	 = $request->unit[$key]	;
+                $rfq_detail->save();
+            }
+          
 
 
             return redirect('/')->with(['level' => 'success', 'content' => "Your account has been created successfully, please login with your email address."]);
@@ -71,7 +92,7 @@ class BuyerController extends Controller
         }
         else
         {
-            return view('Buyer.create-rfq')->with(compact('user_detail'));;
+            return view('Buyer.create-rfq')->with(compact('user'));;
         }
     }
 

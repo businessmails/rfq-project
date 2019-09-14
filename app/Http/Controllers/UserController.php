@@ -103,8 +103,9 @@ class UserController extends Controller
             $record->name = $request->name;
             $record->email = $request->email;
             $record->password = Hash::make($request->get('password'));
+            $record->remember_token = $this->_getForgotPasswordVerificationToken();
             $record->save();
-
+            $this->sendEmail($record->email,$record);
             $member = Role::where('name', '=', 'buyer')->first();
             $record->attachRole($member);
             $user_detail = new UserDetail();
@@ -147,7 +148,9 @@ class UserController extends Controller
             $record->name = $request->name;
             $record->email = $request->email;
             $record->password = Hash::make($request->get('password'));
+            $record->remember_token = $this->_getForgotPasswordVerificationToken();
             $record->save();
+            $this->sendEmail($record->email,$record);
 
             $member = Role::where('name', '=', 'seller')->first();
             $record->attachRole($member);
@@ -172,6 +175,25 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * User Logout
+     */
+    public function VerifyEmail($token) 
+    {
+        $user = User::select('id')->where('remember_token', $token)->first();
+
+                if (empty($user))
+                {
+                    return view('Error.error')->with(compact('response'));
+                }
+                
+                $user->is_verified =1;
+                $user->remember_token = "";
+                $user->save();
+
+                return redirect('/login')->with(['level' => 'success',
+                            'content' => "Password updated, please login."]);
+    }
     /**
      * User Logout
      */

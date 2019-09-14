@@ -35,14 +35,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Buyer Name</label>
-                  <input type="text" class="form-control" name="" value="{{$user_detail->name}}" readonly id="">
+                  <input type="text" class="form-control" name="" value="{{$user->name}}" readonly id="">
                   </div>
                 </div><!-- col -->
-{{-- {{dd($user_detail)}} --}}
+{{-- {{dd($user)}} --}}
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Contact Number</label>
-                    <input type="number" class="form-control"  value="{{$user_detail->UserDetail->phone_number}}"  name="phone_number" id="">
+                    <input type="number" class="form-control"  value="{{$user->UserDetail->phone_number}}"  name="phone_number" id="">
                   </div>
                   @if ($errors->has('phone_number'))
                   <span class="error text-danger">{{ $errors->first('phone_number') }}</span>
@@ -153,9 +153,6 @@
                   </thead>
                   <tbody class="add-tr-body">
                     <tr>
-                      <td>
-                        <span><input type="text" class="form-control" name="item[]" id=""></span>
-                      </td>
                       <td>
                         <span><input type="text" class="form-control" name="stock[]" id=""></span>
                       </td>

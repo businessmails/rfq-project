@@ -1,0 +1,4 @@
+<?php
+
+define('FORGOT_PASSWORD_VERIFICATION_TOKEN_LENGTH',10);
+?>
