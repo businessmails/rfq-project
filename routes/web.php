@@ -24,6 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group([ 'middleware' => ['auth','role:admin']], function() {
+Route::group([ 'middleware' => ['auth','role:admin|buyer']], function() {
     Route::get('/admin','AdminController@index');
+    Route::any('/create-rfq','BuyerController@CreateRfq');
 });

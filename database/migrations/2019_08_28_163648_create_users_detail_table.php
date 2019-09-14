@@ -16,10 +16,12 @@ class CreateUsersDetailTable extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->timestamps();
+            $table->string('phone_number')->nullable();
             $table->string('registration_number');
             $table->string('company_name');
             $table->tinyInteger('account_type');
+            $table->timestamps();
+
         });
     }
 

@@ -8,5 +8,9 @@ class StaticArray {
         1 => 'Corporate',
         2 => 'Individual',
     ];
+    public static $rfq_for = [
+        1 => 'Supply',
+        2 => 'Services',
+    ];
     
 }
