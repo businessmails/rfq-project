@@ -17,8 +17,9 @@ $(document).ready(function(){
 	// add row on click add more btn
 
 	$(document).on("click",".add-row-td", function(){
-		var row= $('.add-tr-body').first('tr').html();
-		$(this).parents('table').find('.add-tr-body').append(row);
+		var clonedRow = $('tbody tr:first').clone();
+		clonedRow.find('input').val('');
+		clonedRow.appendTo('.add-tr-body');
 	});
 
 

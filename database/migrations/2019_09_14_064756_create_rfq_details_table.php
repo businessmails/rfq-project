@@ -16,7 +16,7 @@ class CreateRfqDetailsTable extends Migration
         Schema::create('rfq_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('rfq_id')->unsigned();
-            $table->tinyInteger('item_name');
+            $table->string('item_name');
             $table->string('stock');	
             $table->string('location');
             $table->string('item_description');

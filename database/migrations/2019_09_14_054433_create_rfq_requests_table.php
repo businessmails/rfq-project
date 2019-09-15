@@ -19,7 +19,7 @@ class CreateRfqRequestsTable extends Migration
             $table->tinyInteger('rfq_for');
             $table->string('state');
             $table->string('project_ref');
-            $table->tinyInteger('currency');
+            $table->string('currency');
             $table->string('fob_point');	
             $table->string('freight_quote');
             $table->string('publish_date');

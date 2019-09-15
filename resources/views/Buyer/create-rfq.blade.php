@@ -87,7 +87,11 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Currency</label>
-                    <input type="text" class="form-control" name="currency" id="">
+                    <select class="form-control" name="currency" id="">
+                        @foreach(StaticArray::$currency as $key => $value)
+                        <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                      </select>
                   </div>
                   @if ($errors->has('currency'))
                   <span class="error text-danger">{{ $errors->first('currency') }}</span>
@@ -141,7 +145,6 @@
                 <table class="table table-bordered text-center">
                   <thead>
                     <tr>
-                      <th>Item</th>
                       <th>Stock #</th>
                       <th>Location</th>
                       <th>Name </th>

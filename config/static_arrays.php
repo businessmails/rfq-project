@@ -12,5 +12,9 @@ class StaticArray {
         1 => 'Supply',
         2 => 'Services',
     ];
+    public static $currency = [
+        'SGD' => 'SGD',
+        'USD' => 'USD',
+    ];
     
 }

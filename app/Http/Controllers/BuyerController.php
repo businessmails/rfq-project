@@ -31,14 +31,15 @@ class BuyerController extends Controller
                     'freight_quote' => 'required',
                     'publish_date' => 'required',
                     'closing_date' => 'required',
-                    'stock[]' => 'required',
-                    'location[]' => 'required',
-                    'item_name[]' => 'required',
-                    'item_description[]' => 'required',
-                    'part_no[]' => 'required',
-                    'qty_required[]' => 'required',
-                    'unit[]' => 'required',
+                    'stock' => 'required',
+                    'location' => 'required',
+                    'item_name' => 'required',
+                    'item_description' => 'required',
+                    'part_no' => 'required',
+                    'qty_required' => 'required',
+                    'unit' => 'required',
                     'vendor_remarks' => 'required',
+                    'file' => 'required',
                     'terms' => 'required',
                     'vendor_email' => 'required|email',
                     'is_public' => 'required',
@@ -46,13 +47,26 @@ class BuyerController extends Controller
                     'rfq_criteria' => 'required',
                     'scoring_mathalogy' => 'required',
         ]);
+        // dd($validator->errors());
         if ($validator->passes())
         { 
+            $is_flexible=0;
+            if($request->has('is_flexible')){
+                $is_flexible=1;
+            }
+            $file = $request->file('file');
+            $filename =$file->getClientOriginalName();
+            $destinationPath = 'uploads';
+            $file->move($destinationPath,$file->getClientOriginalName());
+
             $user_detail->phone_number=$request->phone_number;
             $user_detail->save();
             $record = new Rfq();
+            $record->user_id = $user->id;
             $record->rfq_for = $request->rfq_for;
             $record->state = $request->state;
+            $record->project_ref = $request->project_ref;
+            $record->currency = $request->currency;
             $record->fob_point = $request->fob_point;
             $record->freight_quote = $request->freight_quote;
             $record->publish_date = $request->publish_date;
@@ -67,12 +81,15 @@ class BuyerController extends Controller
             $record->rfq_criteria = $request->rfq_criteria;
             $record->scoring_mathalogy = $request->scoring_mathalogy;
             $record->scoring_mathalogy = $request->scoring_mathalogy;
+            $record->file = $filename;
+            $record->is_flexible = $is_flexible;
             $record->save();
 
-            foreach($item as $key =>$value){
+            foreach($request->item_name as $key =>$value){
                 $rfq_detail = new RfqDetail();
                 $rfq_detail->rfq_id = $record->id;
                 $rfq_detail->item_name = $request->item_name[$key];
+                $rfq_detail->stock = $request->stock[$key];
                 $rfq_detail->location = $request->location[$key];
                 $rfq_detail->item_description = $request->item_description[$key];
                 $rfq_detail->part_no = $request->part_no[$key];
